@@ -2089,7 +2089,7 @@ function renderProgress() {
   $id("nextBtn").textContent = cur === 0 ? "Start →" : "Next →";
   $id("nextBtn").style.visibility = posOf(cur) === ORDER.length - 1 || cur === 10 ? "hidden" : "visible";
   const nl = $id("navLink");
-  nl.textContent = cur === 10 ? "See the appendix →" : "";
+  nl.textContent = cur === 10 ? "See the appendix and list of sources →" : "";
   nl.style.display = cur === 10 ? "" : "none";
   // On Wrap-up the link replaces Next, so let it sit flush right
   $id("nextBtn").style.display = cur === 10 ? "none" : "";
