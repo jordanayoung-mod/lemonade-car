@@ -1972,7 +1972,7 @@ function ltSays() {
 function updateTrackComputed() {
   const c = s => TRACK.filter(t => t.status === s).length;
   $id("trackSum").innerHTML = TRACK_STATUS.map(s => `<span class="tkpill"><b>${c(s)}</b> ${s.toLowerCase()}</span>`).join("") +
-    `<span class="tkpill"><b>${TRACK.filter(t => t.decision !== "Undecided").length}</b> of ${TESTS.length} decided</span>` +
+    `<span class="tkpill"><b>${TESTS.filter((t, k) => ruleSays(k)[0] !== "Wait").length}</b> of ${TESTS.length} decided</span>` +
     `<span class="tkpill"><b>${TRACK.reduce((a, t) => a + t.guards.filter(g => g === "Worse").length, 0)}</b> guardrails worse</span>`;
   const l = liftOf(TSTORE.one.today, TSTORE.one.next);
   $id("tkOneRes").innerHTML = l === null ? `<div class="tkbig">No result yet</div><div class="tksub">Waiting for results</div>` :
@@ -2010,8 +2010,7 @@ function renderTrack() {
           <div class="tkrow3">${fld("Today %", inp(`${p}.metrics.${j}.today`, tr.metrics[j].today, "number"))}${fld("New %", inp(`${p}.metrics.${j}.next`, tr.metrics[j].next, "number"))}${fld("Target lift %", inp(`${p}.metrics.${j}.target`, tr.metrics[j].target, "number"))}</div>
           <div class="tkres" id="tkres${k}_${j}"></div></div>`).join("")}</div>
         <div class="tkgdbox"><div class="lab">Must not get worse</div>${t.guard.map((g, j) => `<div class="tkguard"><span>${g}</span>${sel(`${p}.guards.${j}`, ["Not read", "Holding", "Worse"], tr.guards[j])}</div>`).join("")}</div>
-        <div><div class="tkrulebox" id="tkrules${k}"><div class="lab">Decision rule</div><dl><dt data-v="Ship">Ship</dt><dd data-v="Ship">${R.ship}</dd><dt data-v="Iterate">Iterate</dt><dd data-v="Iterate">${R.iterate}</dd><dt data-v="Stop">Stop</dt><dd data-v="Stop">${R.stop}</dd></dl></div>
-          <div class="tkdec">${fld("Lemonade's decision", sel(`${p}.decision`, ["Undecided", "Ship", "Iterate", "Stop"], tr.decision))}${fld("Why, and what happens next", `<textarea data-p="${p}.why" rows="2">${esc(tr.why)}</textarea>`, "grow")}</div></div>
+        <div><div class="tkrulebox" id="tkrules${k}"><div class="lab">Decision rule</div><dl><dt data-v="Ship">Ship</dt><dd data-v="Ship">${R.ship}</dd><dt data-v="Iterate">Iterate</dt><dd data-v="Iterate">${R.iterate}</dd><dt data-v="Stop">Stop</dt><dd data-v="Stop">${R.stop}</dd></dl></div></div>
       </div></div>`;
   }).join("") +
     `<div class="card tkcard"><div class="tsth">Long-term checks <span class="small muted" style="font-weight:400;margin-left:6px">new customers vs the holdout group, weeks 7 to 18</span></div>
