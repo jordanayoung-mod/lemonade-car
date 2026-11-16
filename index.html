@@ -1712,7 +1712,7 @@ const EXP_SCREENS = [
   { t:"Landing page", shot:"hero", fixes:["story","transparency"], hero:true },
   { t:"Flow opens", shot:"open", fixes:["recognize"] },
   { t:"Out of state", shot:"waitlist", fixes:["bridge","partner"] },
-  { t:"Existing policies", shot:"policies", fixes:["proof"] },
+  { t:"Existing policies", shot:"policies", fixes:["proof"], afterLab:"With the changes (existing Lemonade policy holders)" },
   { t:"Mileage", shot:"miles", fixes:["compare"] },
   { t:"Perks", shot:"perks", fixes:["payoff"] },
   { t:"Loading", shot:"loading", fixes:["loading"] },
@@ -1828,7 +1828,7 @@ function renderExperience(r) {
       ${EXPECT[sc.t] ? `<div class="objective"><b>Expected outcome:</b> ${EXPECT[sc.t]}</div>` : ""}
       <div class="rvgrid"><div><div class="mlab">Today</div>${sc.shot ? `<img src="${SHOTS[sc.shot]}" alt="${sc.t} today">` : `<div class="ph">Not reached in the walkthrough</div>`}</div>
       <div class="rvarrow" aria-hidden="true"><svg viewBox="0 0 70 40"><path d="M4 20H50" style="stroke:var(--cp-accent)" stroke-width="8" stroke-linecap="round"/><path d="M44 5L67 20L44 35Z" style="fill:var(--cp-accent)" stroke-linejoin="round"/></svg></div>
-      <div><div class="mlab" style="color:var(--cp-accent)">With the changes</div>${right}</div></div>
+      <div><div class="mlab" style="color:var(--cp-accent)">${sc.afterLab || "With the changes"}</div>${right}</div></div>
       <div class="expd${ms.length > 1 ? " two" : ""}">${detail}</div>
       <label class="toggle" style="border:none;padding:10px 0 0"><input type="checkbox" data-scr="${k}" ${on ? "checked" : ""}><span class="t">Implement change</span></label></div>`;
   }).join("");
