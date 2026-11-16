@@ -356,6 +356,10 @@ button.primary { font-weight: 700; letter-spacing: .02em; text-transform: upperc
 .tkguard { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:7px 0; border-bottom:1px solid var(--cp-border); font-size:13px; color: var(--cp-heading); }
 .tkrulebox { background: var(--cp-surface-soft); border-radius:10px; padding:12px 14px; }
 .tkrulebox dl { display:grid; grid-template-columns: 62px 1fr; gap:6px 8px; margin:0; font-size:12.5px; }
+.tkrulebox [data-v="Ship"].on, .tkrulebox [data-v="Keep"].on { color: var(--cp-success); font-weight:800; }
+.tkrulebox [data-v="Iterate"].on { color: var(--cp-warning); font-weight:800; }
+.tkrulebox [data-v="Stop"].on, .tkrulebox [data-v="Reverse"].on { color: var(--cp-danger); font-weight:800; }
+.tkdec { margin-top:12px !important; }
 .tkrulebox dt { font-weight:800; color: var(--cp-heading); } .tkrulebox dd { margin:0; color: var(--cp-text); }
 .tksays { border:2px solid var(--cp-accent); border-radius:12px; padding:10px 14px; margin-top:10px; }
 .tksays .lab { margin-bottom:2px; }
@@ -1975,11 +1979,12 @@ function updateTrackComputed() {
     `<div class="tkbig" style="color:${l >= 10 ? "var(--cp-success)" : "var(--cp-heading)"}">${fmtLift(l)} lift</div><div class="tksub">${l >= 10 ? "Clears the +10% bar" : "Below the +10% bar"}</div>`;
   TESTS.forEach((t, k) => {
     TRACK[k].metrics.forEach((m, j) => { const el = $id(`tkres${k}_${j}`); if (el) el.innerHTML = metricResult(m).html; });
-    const [v, why] = ruleSays(k), el = $id(`tkrule${k}`);
-    if (el) el.innerHTML = `<div class="lab">The rule says</div><div class="tkverdict v-${v}">${v}</div><div class="tksub">${why}</div>`;
+    // Highlight the rule that currently applies instead of restating it
+    const [v] = ruleSays(k);
+    document.querySelectorAll(`#tkrules${k} [data-v]`).forEach(el => el.classList.toggle("on", el.dataset.v === v));
   });
   const [lv, lw] = ltSays();
-  $id("tkltRule").innerHTML = `<div class="lab">The rule says</div><div class="tkverdict v-${lv.split(" ")[0]}">${lv}</div>${lw ? `<div class="tksub">${lw}</div>` : ""}`;
+  document.querySelectorAll("#tkrulesLT [data-v]").forEach(el => el.classList.toggle("on", el.dataset.v === lv));
 }
 function renderTrack() {
   const esc = v => String(v).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
@@ -2005,14 +2010,13 @@ function renderTrack() {
           <div class="tkrow3">${fld("Today %", inp(`${p}.metrics.${j}.today`, tr.metrics[j].today, "number"))}${fld("New %", inp(`${p}.metrics.${j}.next`, tr.metrics[j].next, "number"))}${fld("Target lift %", inp(`${p}.metrics.${j}.target`, tr.metrics[j].target, "number"))}</div>
           <div class="tkres" id="tkres${k}_${j}"></div></div>`).join("")}</div>
         <div class="tkgdbox"><div class="lab">Must not get worse</div>${t.guard.map((g, j) => `<div class="tkguard"><span>${g}</span>${sel(`${p}.guards.${j}`, ["Not read", "Holding", "Worse"], tr.guards[j])}</div>`).join("")}</div>
-        <div><div class="tkrulebox"><div class="lab">Decision rule</div><dl><dt>Ship</dt><dd>${R.ship}</dd><dt>Iterate</dt><dd>${R.iterate}</dd><dt>Stop</dt><dd>${R.stop}</dd></dl></div>
-          <div class="tksays" id="tkrule${k}"></div>
+        <div><div class="tkrulebox" id="tkrules${k}"><div class="lab">Decision rule</div><dl><dt data-v="Ship">Ship</dt><dd data-v="Ship">${R.ship}</dd><dt data-v="Iterate">Iterate</dt><dd data-v="Iterate">${R.iterate}</dd><dt data-v="Stop">Stop</dt><dd data-v="Stop">${R.stop}</dd></dl></div>
           <div class="tkdec">${fld("Lemonade's decision", sel(`${p}.decision`, ["Undecided", "Ship", "Iterate", "Stop"], tr.decision))}${fld("Why, and what happens next", `<textarea data-p="${p}.why" rows="2">${esc(tr.why)}</textarea>`, "grow")}</div></div>
       </div></div>`;
   }).join("") +
     `<div class="card tkcard"><div class="tsth">Long-term checks <span class="small muted" style="font-weight:400;margin-left:6px">new customers vs the holdout group, weeks 7 to 18</span></div>
       <div class="tkcols lt"><div>${LT_CHECKS.map((c, j) => `<div class="tkguard"><span>${c}</span>${sel(`lt.${j}`, ["Not read", "As good", "Worse"], TSTORE.lt[j])}</div>`).join("")}</div>
-      <div><div class="tkrulebox"><div class="lab">Decision rule</div><dl><dt>Keep</dt><dd>New customers perform as well as the holdout group.</dd><dt>Reverse</dt><dd>Loss ratio or retention is worse than the holdout group.</dd></dl></div><div class="tksays" id="tkltRule"></div></div></div></div>`;
+      <div><div class="tkrulebox" id="tkrulesLT"><div class="lab">Decision rule</div><dl><dt data-v="Keep">Keep</dt><dd data-v="Keep">New customers perform as well as the holdout group.</dd><dt data-v="Reverse">Reverse</dt><dd data-v="Reverse">Loss ratio or retention is worse than the holdout group.</dd></dl></div></div></div></div>`;
   const root = $id("step8");
   const setP = (path, v) => { const ks = path.split("."), last = ks.pop(); ks.reduce((o, x) => o[x], TSTORE)[last] = v; };
   root.querySelectorAll("[data-p]").forEach(el => {
