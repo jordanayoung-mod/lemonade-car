@@ -1611,7 +1611,7 @@ function renderRivals(r) {
     const dx = gx - tx, dy = gy - ty, len = Math.hypot(dx, dy) || 1;
     under += `<line x1="${tx + dx / len * 12}" y1="${ty + dy / len * 12}" x2="${gx - dx / len * 16}" y2="${gy - dy / len * 16}" style="stroke:var(--cp-accent)" stroke-width="3" marker-end="url(#arr4)"/>`;
     s += `<circle cx="${gx}" cy="${gy}" r="12" style="fill:var(--cp-accent)"/>`;
-    if (sp.id === "you") s += ["We see you, we price on you,", "not an average"].map((t, i) => `<text class="tgtLbl" x="${gx}" y="${gy - 34 + i * 16}" font-size="13" font-weight="800" text-anchor="middle" style="fill:var(--cp-accent)">${t}</text>`).join("");
+    if (sp.id === "you") s += ["We see you, we price on you,", "not an average"].map((t, i) => `<text class="tgtLbl" x="${gx + 9}" y="${gy - 37 + i * 18}" font-size="15.5" font-weight="900" text-anchor="middle" style="fill:var(--cp-accent)">${t}</text>`).join("");
     else if (sp.id === "corner") s += `<text id="tgtLbl" x="${gx}" y="${gy - 22}" font-size="15" font-weight="800" text-anchor="middle" style="fill:var(--cp-accent)">${sp.n}</text>`;
     else s += `<text id="tgtLbl" x="${gx - 18}" y="${gy + 5}" font-size="15" font-weight="800" text-anchor="end" style="fill:var(--cp-accent)">${sp.n}</text>`;
   }
