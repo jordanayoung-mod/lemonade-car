@@ -758,7 +758,7 @@ tr.inscope td { background: var(--cp-accent-soft); }
 
     <section class="step" data-step="6">
       <div class="kicker">Step 5 of 7 · The experience</div>
-      <h2 class="t">Bringing the ‘we see you, we price on you, not an average’ positioning to life across the quote experience.</h2>
+      <h2 class="t">Bringing the ‘We see you. Your price shows it.’ positioning to life across the quote experience.</h2>
       <div id="sum6" hidden></div>
       <div class="expnav" id="expNav"></div>
       <div id="moments"></div>
@@ -1004,7 +1004,7 @@ const POSITIONINGS = [
     headline:"Car insurance that costs less for safe drivers", sub:"Super fast everything. Seamless claims. Low rates for low mileage.", cta:"Check our prices",
     proof:"Seamless claims · Low rates for low mileage",
     note:"Parity claims. “Fast” is GEICO's (“15 minutes could save you 15%”). “Safe drivers pay less” is every telematics program (Snapshot, Drive Safe & Save, Drivewise).", risk:null },
-  { id:"fair", name:"We see you, we price on you, not an average",
+  { id:"fair", name:"We see you. Your price shows it.",
     res:[1.05,1.10,1.20,1.25,1.35,1.15,1.15], drv:[2,3,3,2,1,3], distinct:0.70, cred:0.75, xy:[0.85,0.50],
     headline:"Car insurance priced on <i>you</i>, not everyone else.", sub:"At Lemonade, we see you - and we know you're anything but average ;-)", subOld:"Most insurers price you off a pool of “drivers like you.” Lemonade starts with the driver you actually are, and keeps learning as you drive.", cta:"Get my price",
     proof:"Your real miles · Your actual driving · Your car's safety features",
@@ -1178,7 +1178,7 @@ const SPACES = [
   { id:"corner", quad:"Top left · priced on the pool, leads with relationship", feels:[11,8], xy:[0.2,0.8], n:"A person in your corner", owners:"State Farm, Allstate, USAA, Farmers", status:"Contested", pos:"corner" },
   { id:"fast", quad:"Bottom left · priced on the pool, leads with price", feels:[9,12], xy:[0.2,0.2], n:"Cheapest price, fast", owners:"GEICO, Progressive, Liberty Mutual", status:"Crowded", pos:"status" },
   { id:"miles", quad:"Bottom right · priced on you, leads with price", feels:[2], xy:[0.8,0.2], n:"Pay for how you drive", owners:"Where Lemonade Car is today. Root owns it; Allstate Milewise and every telematics program compete", status:"Parity", pos:"miles" },
-  { id:"you", quad:"Top right · priced on you, leads with relationship", feels:[15,0,1], xy:[0.69,0.44], n:"We see you, we price on you, not an average", owners:"Open white space. Meets the needs no rival answers. It sits a short step from where Lemonade already is (per-mile pricing, driving data, one app), so it builds on existing brand equity, but moves the weight onto “we see you”", status:"Open", pos:"fair", rec:true },
+  { id:"you", quad:"Top right · priced on you, leads with relationship", feels:[15,0,1], xy:[0.69,0.44], n:"We see you. Your price shows it.", owners:"Open white space. Meets the needs no rival answers. It sits a short step from where Lemonade already is (per-mile pricing, driving data, one app), so it builds on existing brand equity, but moves the weight onto “we see you”", status:"Open", pos:"fair", rec:true },
 ];
 
 // ---- Market drivers ranked by ability to drive profitable acquisition + retention (12–24 months) ----
@@ -1611,7 +1611,7 @@ function renderRivals(r) {
     const dx = gx - tx, dy = gy - ty, len = Math.hypot(dx, dy) || 1;
     under += `<line x1="${tx + dx / len * 12}" y1="${ty + dy / len * 12}" x2="${gx - dx / len * 16}" y2="${gy - dy / len * 16}" style="stroke:var(--cp-accent)" stroke-width="3" marker-end="url(#arr4)"/>`;
     s += `<circle cx="${gx}" cy="${gy}" r="12" style="fill:var(--cp-accent)"/>`;
-    if (sp.id === "you") s += ["We see you, we price on you,", "not an average"].map((t, i) => `<text class="tgtLbl" x="${gx + 9}" y="${gy - 37 + i * 18}" font-size="15.5" font-weight="900" text-anchor="middle" style="fill:var(--cp-accent)">${t}</text>`).join("");
+    if (sp.id === "you") s += ["We see you.", "Your price shows it."].map((t, i) => `<text class="tgtLbl" x="${gx + 9}" y="${gy - 37 + i * 18}" font-size="15.5" font-weight="900" text-anchor="middle" style="fill:var(--cp-accent)">${t}</text>`).join("");
     else if (sp.id === "corner") s += `<text id="tgtLbl" x="${gx}" y="${gy - 22}" font-size="15" font-weight="800" text-anchor="middle" style="fill:var(--cp-accent)">${sp.n}</text>`;
     else s += `<text id="tgtLbl" x="${gx - 18}" y="${gy + 5}" font-size="15" font-weight="800" text-anchor="end" style="fill:var(--cp-accent)">${sp.n}</text>`;
   }
@@ -1622,14 +1622,14 @@ function renderRivals(r) {
       <span><span style="color:var(--cp-border-strong);font-size:16px">●</span> Customer need</span>
       <span><span style="display:inline-block;width:9px;height:9px;background:var(--cp-heading);vertical-align:0"></span> Competitor, beside the need it answers</span>
       <span><span style="display:inline-block;width:10px;height:10px;border:2.5px solid var(--cp-accent);border-radius:50%;vertical-align:-1px"></span> Lemonade Car today</span>
-      ${withTarget ? `<span><span style="color:var(--cp-accent);font-size:16px">●</span> We see you, we price on you, not an average</span>` : ""}</div>`;
+      ${withTarget ? `<span><span style="color:var(--cp-accent);font-size:16px">●</span> We see you. Your price shows it.</span>` : ""}</div>`;
   $id("mapA").innerHTML = base.replace(/id="arr4"/, 'id="arr4a"') + `</svg>` + legend(false);
   $id("map").innerHTML = s + `</svg>
     <div class="small" style="margin-top:4px;display:flex;gap:22px;flex-wrap:wrap;color:var(--cp-text-muted)">
       <span><span style="color:var(--cp-border-strong);font-size:16px">●</span> Customer need</span>
       <span><span style="display:inline-block;width:9px;height:9px;background:var(--cp-heading);vertical-align:0"></span> Competitor, beside the need it answers</span>
       <span><span style="display:inline-block;width:10px;height:10px;border:2.5px solid var(--cp-accent);border-radius:50%;vertical-align:-1px"></span> Lemonade Car today</span>
-      <span><span style="color:var(--cp-accent);font-size:16px">●</span> We see you, we price on you, not an average</span></div>`;
+      <span><span style="color:var(--cp-accent);font-size:16px">●</span> We see you. Your price shows it.</span></div>`;
   document.querySelectorAll("#map text[data-lim], #mapA text[data-lim]").forEach(t => { const lim = +t.dataset.lim; let fs = +t.getAttribute("font-size"); while (fs > 8 && t.getBBox().x + t.getBBox().width > lim) { fs -= 0.5; t.setAttribute("font-size", fs); } });
   const svg = $id("map").querySelector("svg");
   svg.style.cursor = "pointer";
