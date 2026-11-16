@@ -720,7 +720,7 @@ tr.inscope td { background: var(--cp-accent-soft); }
     </section>
 
     <section class="step" data-step="1">
-      <div class="kicker">Appendix A · Where can Lemonade play?</div>
+      <div class="kicker">Appendix B · Where can Lemonade play?</div>
       <h2 class="t" id="h1"></h2>
       <div class="card"><div class="grid2" style="gap:20px;align-items:start">
         <div><div style="margin-bottom:10px;font-size:17px;font-weight:800;color:var(--cp-accent)">👇 Click on a state to add it to the model.</div><div id="stateMap"></div><div id="stateLegend" class="small" style="margin-top:6px"></div><p class="hint" style="margin-top:8px">Model not calibrated by state: state premiums are estimated (population × cost index) and conversion rates are national averages.</p></div>
@@ -760,7 +760,7 @@ tr.inscope td { background: var(--cp-accent-soft); }
     </section>
 
     <section class="step" data-step="5">
-      <div class="kicker">Appendix B · Who hears it first?</div>
+      <div class="kicker">Appendix C · Who hears it first?</div>
       <h2 class="t" id="h5"></h2>
       <div class="card"><div class="small muted" style="margin-bottom:6px">Illustrative budget, to show how spend would be split. Not a Lemonade figure.</div><div class="budgetrow"><label for="budgetIn"><b>Car acquisition budget</b></label><span class="spend budget">$<input type="number" id="budgetIn" min="0" max="10000000" step="50000"></span></div>
         <table id="segTable"></table>
@@ -803,7 +803,7 @@ tr.inscope td { background: var(--cp-accent-soft); }
     </section>
 
     <section class="step" data-step="11">
-      <div class="kicker">Appendix C · Sources</div>
+      <div class="kicker">Appendix A · Sources</div>
       <h2 class="t">Every source used to build this simulator</h2>
       <div class="small muted" style="margin:-8px 0 14px">Grouped by subject. <span class="srccited">Cited</span> marks sources linked from the maps and audience evidence. Links open in a new tab.</div>
       <div class="card srcs" id="sourcesList"></div>
@@ -2074,7 +2074,7 @@ function renderChain(r) {
 const STEP_NAMES = ["Where", "Who to win", "Drivers & barriers", "Competitive map", "Audiences", "Experience", "Rollout", "Track", "Positioning", "Wrap-up", "Sources"];
 // Display order of the internal step ids (0 = Brief). "Who to win" (2) comes after the competitive map (4).
 // Main story first, then the wrap-up, then the appendix
-const MAIN = [3, 4, 2, 9, 6, 7, 8], APPX = [1, 5, 11];
+const MAIN = [3, 4, 2, 9, 6, 7, 8], APPX = [11, 1, 5];
 const ORDER = [0, ...MAIN, 10, ...APPX];
 const stepTag = id => MAIN.includes(id) ? String(MAIN.indexOf(id) + 1) : APPX.includes(id) ? "ABCDEFG"[APPX.indexOf(id)] : "";
 const stepLabel = id => id === 10 ? "Wrap up" : `${stepTag(id)}. ${STEP_NAMES[id - 1]}`;
@@ -2089,7 +2089,7 @@ function renderProgress() {
   $id("nextBtn").textContent = cur === 0 ? "Start →" : "Next →";
   $id("nextBtn").style.visibility = posOf(cur) === ORDER.length - 1 || cur === 10 ? "hidden" : "visible";
   const nl = $id("navLink");
-  nl.textContent = cur === 10 ? "See the appendix and list of sources →" : "";
+  nl.textContent = cur === 10 ? "See the list of sources and appendix →" : "";
   nl.style.display = cur === 10 ? "" : "none";
   // On Wrap-up the link replaces Next, so let it sit flush right
   $id("nextBtn").style.display = cur === 10 ? "none" : "";
