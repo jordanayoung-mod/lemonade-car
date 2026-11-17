@@ -749,7 +749,6 @@ tr.inscope td { background: var(--cp-accent-soft); }
     <section class="step" data-step="9">
       <div class="kicker">Step 4 of 7 · Positioning</div>
       <h2 class="t">A small positioning shift (to ‘We see you. Your price shows it’) could grow Lemonade's share: own the needs competitors ignore, compete on more than price, and keep winning customers from GEICO, Progressive and Allstate.</h2>
-      <div class="throb" style="margin:-6px 0 14px;font-size:17px;font-weight:800;color:var(--cp-accent)">👇 Click on a quadrant to choose the space Lemonade claims.</div>
       <div class="card"><div id="map"></div></div>
     </section>
 
@@ -1580,7 +1579,7 @@ function renderStep3() {
 // Step 4 map: customer needs (from step 3) + competitors beside the need they answer + Lemonade today → target
 const MAP4_BRANDS = [["State Farm",0.056,0.04],["USAA",0.30,0.23],["Allstate",0.386,0.252],["Farmers",0.008,0.40],["Progressive",0.386,0.649],["Liberty Mutual",0.271,0.755],["GEICO",0.37,0.865],["Root",0.943,0.926]];
 function renderRivals(r) {
-  const sp = SPACES.find(x => x.id === picks[4]);
+  const sp = SPACES.find(x => x.id === (window.mapSpin || picks[4]));
   const W = 1000, H = 520, L = 150, T = 50, X0 = L, X1 = W - 30, Y0 = T, Y1 = H - 54, mx = (X0 + X1) / 2, my = (Y0 + Y1) / 2;
   const X = f => X0 + f * (X1 - X0), Y = f => Y0 + f * (Y1 - Y0);
   const ax = (x, y, t, a) => `<text x="${x}" y="${y}" font-size="14" font-weight="700" text-anchor="${a}" style="fill:var(--cp-accent)">${t}</text>`;
@@ -1641,17 +1640,16 @@ function renderRivals(r) {
       <span><span style="display:inline-block;width:9px;height:9px;background:var(--cp-heading);vertical-align:0"></span> Competitor, beside the need it answers</span>
       <span><span style="display:inline-block;width:10px;height:10px;border:2.5px solid var(--cp-accent);border-radius:50%;vertical-align:-1px"></span> Lemonade Car today</span></div>`;
   document.querySelectorAll("#map text[data-lim], #mapA text[data-lim]").forEach(t => { const lim = +t.dataset.lim; let fs = +t.getAttribute("font-size"); while (fs > 8 && t.getBBox().x + t.getBBox().width > lim) { fs -= 0.5; t.setAttribute("font-size", fs); } });
-  const svg = $id("map").querySelector("svg");
-  svg.style.cursor = "pointer";
-  svg.onclick = e => {
-    if (e.target.closest("a")) return;
-    const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
-    const q = pt.matrixTransform(svg.getScreenCTM().inverse());
-    if (q.x < X0 || q.x > X1 || q.y < Y0 || q.y > Y1) return;
-    const id = q.x < mx ? (q.y < my ? "corner" : "fast") : (q.y < my ? "you" : "miles");
-    if (id !== picks[4]) choose(4, id);
-  };
 }
+
+// Positioning map cycles through each space Lemonade could claim, starting with the recommended one
+const SPIN_ORDER = ["you", "corner", "fast", "miles"];
+setInterval(() => {
+  if (cur !== 9 || document.hidden) { window.mapSpin = null; return; }
+  const i = SPIN_ORDER.indexOf(window.mapSpin || picks[4]);
+  window.mapSpin = SPIN_ORDER[(i + 1) % SPIN_ORDER.length];
+  renderRivals();
+}, 2600);
 // ================= UI B: steps 5–9, chain, navigation =================
 function renderStep5() {
   const sumW = Object.values(state.w).reduce((a, b) => a + b, 0) || 1;
@@ -1832,7 +1830,6 @@ function renderExperience(r) {
     const detail = sc.hero
       ? `<div class="expm">
          <div class="lab">Suggested copy</div><div class="chg">“${headlineOf()}”<br><span style="font-weight:400">${p.sub}</span></div>
-         <div class="row" style="justify-content:flex-start;gap:8px;margin:8px 0 0"><span class="small muted">Preview as</span><select id="previewSeg" style="width:auto">${[["generic", "Everyone"], ["existing", "Existing Lemonade customer"]].map(([v, n]) => `<option value="${v}"${v === segId ? " selected" : ""}>${n}</option>`).join("")}</select></div>
 </div>`
       : ms.map(m => `<div class="expm ${f(m.fix) ? "" : "off"}">${ms.length > 1 ? `<div class="lab" style="margin-top:0">${m.t}</div>` : ""}         <div class="lab">Suggested copy</div><div class="chg">${m.change}</div>
          ${m.flag ? `<div class="flag">${m.flag}</div>` : ""}</div>`).join("");
@@ -1846,7 +1843,6 @@ function renderExperience(r) {
       <div class="expd${ms.length > 1 ? " two" : ""}">${detail}</div>
       <label class="toggle" style="border:none;padding:10px 0 0"><input type="checkbox" data-scr="${k}" ${on ? "checked" : ""}><span class="t">Implement change</span></label></div>`;
   }).join("");
-  const ps = $id("previewSeg"); if (ps) ps.onchange = e => { window.previewSegId = e.target.value; renderAll(); };
   $id("moments").querySelectorAll("input[data-scr]").forEach(el => el.onchange = e => {
     EXP_SCREENS[+el.dataset.scr].fixes.forEach(id => e.target.checked ? state.fixes.add(id) : state.fixes.delete(id));
     const same = Object.keys(SCOPE_FIXES).find(k => { const x = SCOPE_FIXES[k](); return x.length === state.fixes.size && x.every(i => state.fixes.has(i)); });
@@ -2094,7 +2090,7 @@ function renderProgress() {
   nl.onclick = e => { e.preventDefault(); go(APPX[0]); };
 }
 
-function go(n) { cur = clamp(n, 0, 11); renderAll(); if (cur === 0 || cur === 10) layoutRoad(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+function go(n) { cur = clamp(n, 0, 11); window.mapSpin = null; renderAll(); if (cur === 0 || cur === 10) layoutRoad(); window.scrollTo({ top: 0, behavior: "smooth" }); }
 
 // Stretch the Brief road to the full width of the pink box without distorting the car
 function layoutRoad() {
