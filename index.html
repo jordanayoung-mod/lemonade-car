@@ -314,10 +314,11 @@ button.primary { font-weight: 700; letter-spacing: .02em; text-transform: upperc
 .thxtxt { flex:1; min-width:0; }
 .thxh { font-size:30px; font-weight:900; color: var(--cp-accent); line-height:1.2; margin-bottom:20px; }
 .thxp { font-size:17px; line-height:1.45; max-width:600px; margin:0 0 16px; color: var(--cp-accent); font-weight:700; text-wrap:balance; }
-.thxlink { display:inline-block; font-size:15px; font-weight:800; color: var(--cp-accent); text-decoration:underline; text-underline-offset:4px; text-decoration-thickness:1px; }
+.thxlink { display:inline-block; font-size:15px; font-weight:800; color: var(--cp-text-muted); text-decoration:underline; text-underline-offset:4px; text-decoration-thickness:1px; }
 .thxname { font-size:22px; font-weight:900; color: var(--cp-accent); margin-top:36px; line-height:1.2; }
-.thxcon { display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center; margin-top:10px; font-size:15px; color: var(--cp-text-muted); }
-.thxcon a { color: var(--cp-text); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:4px; }
+.thxcon { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:14px; }
+.thxcon a { display:inline-block; background: var(--cp-accent); color: var(--cp-accent-fg); border:1px solid var(--cp-accent); border-radius:999px; padding:9px 18px; font-size:13px; font-weight:700; letter-spacing:.02em; text-decoration:none; transition: background .15s; }
+.thxcon a:hover { background: var(--cp-accent-hover); }
 .heartroad { flex:none; width:300px; height:270px; overflow:visible; }
 .heartroad .hrd { fill:none; stroke:#333; stroke-width:20; stroke-linejoin:round; opacity:.85; }
 .heartroad .hdash { fill:none; stroke:#fff; stroke-width:2; stroke-dasharray:12 9; animation: bdash 1s linear infinite; }
@@ -870,7 +871,7 @@ tr.inscope td { background: var(--cp-accent-soft); }
           <p class="thxp">Happy to talk through any of it.</p>
           <a href="#" class="thxlink" id="thxSrc">See the list of sources and appendix →</a>
           <div class="thxname">Jordana Young</div>
-          <div class="thxcon"><a href="tel:0523821388">0523821388</a><span>·</span><a href="https://www.linkedin.com/in/jordana-young" target="_blank" rel="noopener">linkedin.com/in/jordana-young</a><span>·</span><a href="mailto:jordanayoung@gmail.com">jordanayoung@gmail.com</a></div>
+          <div class="thxcon"><a href="tel:0523821388">0523821388</a><a href="https://www.linkedin.com/in/jordana-young" target="_blank" rel="noopener">linkedin.com/in/jordana-young</a><a href="mailto:jordanayoung@gmail.com">jordanayoung@gmail.com</a></div>
         </div>
         <svg class="heartroad" viewBox="0 0 400 360" aria-hidden="true">
           <path d="M192 324 C 120 270, 30 200, 30 125 C 30 65, 75 30, 120 30 C 160 30, 188 58, 194 84 Q 200 100 206 84 C 212 58, 240 30, 280 30 C 325 30, 370 65, 370 125 C 370 200, 280 270, 208 324 Q 200 330 192 324 Z" class="hrd"/>
