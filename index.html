@@ -1763,7 +1763,7 @@ function editedShot(sc, p) {
     case "waitlist": {
       const t = (f("bridge") ? "Lemonade Car is coming to Connecticut. Join the waitlist and we'll tell you the day it arrives." : "Lemonade Car is heading to Connecticut! Join our waiting list and get notified when we launch.") + (f("partner") ? "<br><br>Need cover today? Our partner Bristol West can quote you now." : f("bridge") ? "" : "<br><br>Meanwhile, our partner Bristol West can help you find a great deal.");
       o = [Q(t, 5, 400)];
-      if (f("bridge")) o.push({ px:345, py:338, pw:2, ph:2, x:347, w:410, cap:345, size:12.5, lh:18, color:"#333", text:"Need renters or home cover now? Lemonade is already here." });
+      if (f("bridge")) o.push({ px:345, py:338, pw:2, ph:2, x:347, w:410, cap:345, size:12.5, lh:18, color:"#333", text:"Need renters or home cover now? <u>Lemonade is already here</u>." });
       break; }
     case "policies": {
       const u = v => `${(v / 8.2).toFixed(3)}cqw`, pink = "rgb(236,0,124)";
