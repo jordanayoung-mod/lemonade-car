@@ -1616,6 +1616,7 @@ function renderRivals(r) {
   s += `<g id="lmndCar" transform="translate(${tx + 46},${ty + 5}) scale(0.7)" style="pointer-events:none"><rect x="-34" y="-22" width="68" height="24" rx="10" fill="#ff0083"/><path d="M-20 -22 L-12 -36 H14 L22 -22 Z" fill="#ff0083"/><path d="M-14 -24 L-9 -33 H0 V-24 Z M3 -24 V-33 H11 L16 -24 Z" fill="#fff" opacity=".85"/><circle cx="-18" cy="3" r="8" fill="#333"/><circle cx="18" cy="3" r="8" fill="#333"/><circle cx="-18" cy="3" r="3" fill="#fff"/><circle cx="18" cy="3" r="3" fill="#fff"/></g>`;
   s += `<text x="${tx - 10}" y="${ty + 32}" font-size="15" font-weight="800" style="fill:var(--cp-accent)">Lemonade Car today</text>`;
   const base = s;
+  s += `<g id="spinBtn" role="button" tabindex="0" style="cursor:pointer"><rect x="${X1 - 160}" y="${T - 41}" width="160" height="30" rx="15" style="fill:var(--cp-surface);stroke:var(--cp-accent)" stroke-width="1.5"/><text x="${X1 - 80}" y="${T - 21.5}" font-size="13" font-weight="800" text-anchor="middle" style="fill:var(--cp-accent)">${window.mapPaused ? "▶ Play animation" : "■ Stop animation"}</text></g>`;
   { const q = { corner: [X0, Y0], fast: [X0, my], miles: [mx, my], you: [mx, Y0] }[sp.id] || [mx, Y0];
     s += `<rect x="${q[0] + 1.5}" y="${q[1] + 1.5}" width="${mx - X0 - 3}" height="${my - Y0 - 3}" style="fill:none;stroke:var(--cp-accent);pointer-events:none" stroke-width="3" stroke-dasharray="8 5"/>`; }
   s += `<g style="pointer-events:none"><rect x="${mx + 12}" y="${Y0 + 9}" width="112" height="22" rx="11" style="fill:var(--cp-accent)"/><text x="${mx + 68}" y="${Y0 + 24.5}" font-size="11" font-weight="800" letter-spacing="0.8" text-anchor="middle" style="fill:var(--cp-accent-fg)">RECOMMENDED</text></g>`;
@@ -1644,6 +1645,8 @@ function renderRivals(r) {
       <span><span style="color:var(--cp-border-strong);font-size:16px">●</span> Customer need</span>
       <span><span style="display:inline-block;width:9px;height:9px;background:var(--cp-heading);vertical-align:0"></span> Competitor, beside the need it answers</span>
       <span><span style="display:inline-block;width:10px;height:10px;border:2.5px solid var(--cp-accent);border-radius:50%;vertical-align:-1px"></span> Lemonade Car today</span></div>`;
+  const sb = $id("spinBtn"), toggle = () => { window.mapPaused = !window.mapPaused; window.mapSpin = null; renderRivals(); $id("spinBtn")?.focus(); };
+  sb.onclick = toggle; sb.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } };
   document.querySelectorAll("#map text[data-lim], #mapA text[data-lim]").forEach(t => { const lim = +t.dataset.lim; let fs = +t.getAttribute("font-size"); while (fs > 8 && t.getBBox().x + t.getBBox().width > lim) { fs -= 0.5; t.setAttribute("font-size", fs); } });
 }
 
@@ -1651,6 +1654,7 @@ function renderRivals(r) {
 const SPIN_ORDER = ["you", "corner", "fast", "miles"];
 setInterval(() => {
   if (cur !== 9 || document.hidden) { window.mapSpin = null; return; }
+  if (window.mapPaused) return;
   const i = SPIN_ORDER.indexOf(window.mapSpin || picks[4]);
   window.mapSpin = SPIN_ORDER[(i + 1) % SPIN_ORDER.length];
   renderRivals();
