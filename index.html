@@ -1887,7 +1887,7 @@ function renderRollout(r) {
     </div>` + TESTS.map((t, k) => `<div class="card tst${t.screens.some(on) ? "" : " off"}">
       <div class="tsth"><span class="tnum">${k + 1}</span>${t.n.replace(/^Test \d+ · /, "")}</div>
       <div class="tflow">
-        <div><div class="lab">The change</div><div class="tchips">${chips(t)}</div><div>${t.change}</div></div>
+        <div><div class="lab">Make changes to</div><div class="tchips">${chips(t)}</div><div>${t.change}</div></div>
         <div class="tarr">→</div>
         <div><div class="lab">So that</div><div>${t.outcome}</div></div>
         <div class="tarr">→</div>
