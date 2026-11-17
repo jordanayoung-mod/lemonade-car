@@ -836,7 +836,7 @@ tr.inscope td { background: var(--cp-accent-soft); }
           <div class="wrow wexp"><div class="wlab">What I'd expect</div><div>More people finish the quote and buy.</div></div></div>
         <div class="wcol"><div class="whead"><span class="wnum">3</span>The exits</div><div class="wsub">When there's no online quote</div>
           <div class="wrow"><div class="wlab">The insight</div><div>A dead end with no reason can lose someone who arrived interested.</div></div>
-          <div class="wrow wsay"><div class="wlab">How I'd say it</div><ul class="wsaylist"><li><button class="wchip" data-scr-go="2">Out of state</button><span>Lemonade Car is coming to Connecticut. Join the waitlist and we’ll tell you the day it arrives. Need cover today? Our partner Bristol West can quote you now.</span></li><li><button class="wchip" data-scr-go="7">Quotes that need a person</button><span>This one needs a human touch. A licensed agent can help: 1-844-942-3866.</span></li></ul></div>
+          <div class="wrow wsay"><div class="wlab">How I'd say it</div><ul class="wsaylist"><li><button class="wchip" data-scr-go="2">Out of state</button><span>Lemonade Car is coming to Connecticut. Join the waitlist and we’ll tell you the day it arrives. Need coverage today? Our partner Bristol West can quote you now.</span></li><li><button class="wchip" data-scr-go="7">Quotes that need a person</button><span>This one needs a human touch. A licensed agent can help: 1-844-942-3866.</span></li></ul></div>
           <div class="wrow wexp"><div class="wlab">What I'd expect</div><div>More people take a next step when they hit a roadblock: improved dead-end recovery rate.</div></div></div>
       </div>
       <div class="wout"><div><div class="wlab">The outcome</div><div class="wouttxt">More of the people who land on the page end up with a policy.</div></div><div class="wname">Jordana Young</div></div>
@@ -1239,8 +1239,8 @@ const AUD_WHY = {
 // ---- Walkthrough moments (Experience step), in flow order: screenshot + suggested change ----
 const MOMENTS = [
   { shot:"open", t:"Flow opens", angle:"Make it personal", fix:"recognize", rec:"Greet people by name and say why the questions matter.", change:"“Welcome, Jordana. A few questions so we can tailor your quote.”", why:"They’re building their own quote, not filling in a form." },
-  { shot:"waitlist", t:"Out of state", angle:"Stay in touch", fix:"bridge", rec:"Say when Car arrives, then offer renters or home.", change:"“Lemonade Car is coming to Connecticut. Join the waitlist and we'll tell you the day it arrives. Need cover today? Our partner Bristol West can quote you now.” Then, secondary, underneath the pink button: “Need renters or home cover now? Lemonade is already here.”", why:"A date and an alternative keep people with Lemonade until Car can price them." },
-  { shot:"handoff", t:"Partner hand-off", angle:"Help, even when Lemonade can't", fix:"partner", noObj:true, rec:"Make sure the partner hand-off works, then say what it offers.", change:"“Need cover today? Our partner Bristol West can quote you now.”", why:"Visitors Lemonade can't serve yet still leave with help." },
+  { shot:"waitlist", t:"Out of state", angle:"Stay in touch", fix:"bridge", rec:"Say when Car arrives, then offer renters or home.", change:"“Lemonade Car is coming to Connecticut. Join the waitlist and we'll tell you the day it arrives. Need coverage today? Our partner Bristol West can quote you now.” Then, secondary, underneath the pink button: “Need renters or home cover now? Lemonade is already here.”", why:"A date and an alternative keep people with Lemonade until Car can price them." },
+  { shot:"handoff", t:"Partner hand-off", angle:"Help, even when Lemonade can't", fix:"partner", noObj:true, rec:"Make sure the partner hand-off works, then say what it offers.", change:"“Need coverage today? Our partner Bristol West can quote you now.”", why:"Visitors Lemonade can't serve yet still leave with help." },
   { shot:"policies", t:"Existing policies", angle:"Acknowledging", fix:"proof", rec:"Recognize the Lemonade policies they already hold.", change:"“We see your Lemonade Homeowners policy. Any other policies with another company?”", why:"It’s more proof that Lemonade sees the individual." },
   { shot:"miles", t:"Mileage", angle:"Your numbers, not averages", fix:"compare", rec:"Say how miles shape the price, right at the question.", change:"“How far do you drive in a year? Your price is built on your miles, not the national average.”", why:"A form field becomes proof that the price follows how they drive." },
   { shot:"perks", t:"Perks", angle:"Show the working", fix:"payoff", rec:"Tie the extras to what they told you.", change:"“Based on your answers, your Lemonade Car coverage also includes:”", why:"The coverage reads as shaped by their answers, not an average." },
@@ -1716,7 +1716,7 @@ function beatCopy(beat, segId, p) {
     help: ["“We've hit a roadblock.”", "“We can't finish this quote online. A licensed agent can help: 1-844-942-3866.”"],
     decline: ["“Make/model not covered”", "“We can't cover this car yet. Got another car? Add it here.”"],
     bridge: [`“Heading to ${waitState ? waitState.n : "your state"}!”`, `“Car is coming to ${waitState ? waitState.n : "your state"}. Join the waitlist and we'll tell you the day it arrives.” Then: “Need renters or home cover now? Lemonade is already here.”`],
-    partner: ["Bristol West → Access Denied", "“Need cover today? Our partner Bristol West can quote you now.” (working link)"],
+    partner: ["Bristol West → Access Denied", "“Need coverage today? Our partner Bristol West can quote you now.” (working link)"],
   };
   let html = beat.id === "promise" ? `<div class="preview" style="padding:14px;margin-bottom:6px">${state.personalize && PREVIEW_LINES[segId] ? `<div class="eyebrow">${PREVIEW_LINES[segId]}</div>` : ""}<div class="h" style="font-size:19px">${headlineOf()}</div><div class="s small">${p.sub}</div><div class="cta">${p.cta}</div><div class="proof">${proofPos.proof}</div></div>` : "";
   beat.fixes.forEach(id => {
@@ -1760,7 +1760,7 @@ function editedShot(sc, p) {
       { px:712, py:16, pw:88, ph:14, bg:"rgb(234,0,116)", x:703, w:104, cap:20, size:7.75, lh:11, wt:700, color:"#fff", align:"center", upper:true, text: p.cta }]; break;
     case "open": o = [Q("Welcome, Jordana. A few questions so we can tailor your quote. What's your home address?", 2, 450)]; break;
     case "waitlist": {
-      const t = (f("bridge") ? "Lemonade Car is coming to Connecticut. Join the waitlist and we'll tell you the day it arrives." : "Lemonade Car is heading to Connecticut! Join our waiting list and get notified when we launch.") + (f("partner") ? "<br><br>Need cover today? Our partner Bristol West can quote you now." : f("bridge") ? "" : "<br><br>Meanwhile, our partner Bristol West can help you find a great deal.");
+      const t = (f("bridge") ? "Lemonade Car is coming to Connecticut. Join the waitlist and we'll tell you the day it arrives." : "Lemonade Car is heading to Connecticut! Join our waiting list and get notified when we launch.") + (f("partner") ? "<br><br>Need coverage today? Our partner Bristol West can quote you now." : f("bridge") ? "" : "<br><br>Meanwhile, our partner Bristol West can help you find a great deal.");
       o = [Q(t, 5, 400)];
       if (f("bridge")) o.push({ px:345, py:338, pw:2, ph:2, x:347, w:410, cap:345, size:12.5, lh:18, color:"#333", text:"Need renters or home cover now? <u>Lemonade is already here</u>." });
       break; }
