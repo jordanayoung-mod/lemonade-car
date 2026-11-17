@@ -1649,7 +1649,7 @@ setInterval(() => {
   const i = SPIN_ORDER.indexOf(window.mapSpin || picks[4]);
   window.mapSpin = SPIN_ORDER[(i + 1) % SPIN_ORDER.length];
   renderRivals();
-}, 2600);
+}, 1300);
 // ================= UI B: steps 5–9, chain, navigation =================
 function renderStep5() {
   const sumW = Object.values(state.w).reduce((a, b) => a + b, 0) || 1;
