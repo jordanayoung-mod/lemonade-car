@@ -307,6 +307,12 @@ button.primary { font-weight: 700; letter-spacing: .02em; text-transform: upperc
 .tkmock { color: var(--cp-accent); }
 .tkclear:hover { border-color: var(--cp-accent); color: var(--cp-accent); }
 .tkpills { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+.tkex { background: var(--cp-accent); color:#fff; font-weight:900; font-size:14px; letter-spacing:.02em; border-radius:10px; padding:7px 18px; margin-bottom:10px; }
+.thx { padding:52px 60px 0; }
+.thxh { font-size:46px; font-weight:900; color: var(--cp-heading); line-height:1.15; margin-bottom:22px; }
+.thxp { font-size:21px; line-height:1.55; max-width:660px; margin:0 0 18px; color: var(--cp-text); }
+.thxname { font-size:28px; font-weight:900; color: var(--cp-accent); margin-top:34px; }
+.thx .broad { width:calc(100% + 120px); height:96px; margin:44px -60px 0; }
 .tkpill { border:1px solid var(--cp-border); border-radius:999px; padding:5px 12px; font-size:12.5px; color: var(--cp-text); background: var(--cp-surface); }
 .tkpill b { color: var(--cp-heading); }
 .tkoneP { display:flex; justify-content:space-between; align-items:center; gap:20px; background: var(--cp-accent-soft); border-radius:16px; padding:18px 22px; margin-bottom:14px; }
@@ -799,6 +805,7 @@ tr.inscope td { background: var(--cp-accent-soft); }
       <div class="tktop"><h2 class="t">Then it’s time to test and decide whether to SHIP, ITERATE or STOP.<br>CTR data can provide more insight for specific pages where necessary.</h2><div class="tkbtns"><button class="tkclear" id="trackMock">Load example data</button><button class="tkclear" id="trackClear">Clear all entries</button></div></div>
       <div class="small muted" style="margin:-4px 0 12px">A working tracker for once the A/B tests are live.</div>
       <div class="tkpills" id="trackSum"></div>
+      <div class="tkex">This is an example A/B test tracker</div>
       <div class="tkoneP" id="trackOne"></div>
       <div id="trackRows"></div>
       <p class="small muted">Entries are stored in this browser when storage is available. They aren't shared with anyone else.</p>
@@ -840,6 +847,20 @@ tr.inscope td { background: var(--cp-accent-soft); }
           <div class="wrow wexp"><div class="wlab">What I'd expect</div><div>More people take a next step when they hit a roadblock: improved dead-end recovery rate.</div></div></div>
       </div>
       <div class="wout"><div><div class="wlab">The outcome</div><div class="wouttxt">More of the people who land on the page end up with a policy.</div></div><div class="wname">Jordana Young</div></div>
+    </section>
+
+    <section class="step" data-step="12">
+      <div class="bhero thx">
+        <div class="thxh">Thanks for reading.</div>
+        <p class="thxp">A product that already prices people fairly deserves a story that says so. I enjoyed trying to write it.</p>
+        <p class="thxp">Happy to talk through any of it.</p>
+        <div class="thxname">Jordana Young</div>
+        <svg class="broad" viewBox="0 0 1700 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <path d="M40 95 Q 445 60 850 85 T 1660 70" class="brd"/>
+          <path d="M40 95 Q 445 60 850 85 T 1660 70" class="brdash"/>
+          <g class="bcar"><rect x="-34" y="-22" width="68" height="24" rx="10" fill="#ff0083"/><path d="M-20 -22 L-12 -36 H14 L22 -22 Z" fill="#ff0083"/><path d="M-14 -24 L-9 -33 H0 V-24 Z M3 -24 V-33 H11 L16 -24 Z" fill="#fff" opacity=".85"/><circle cx="-18" cy="3" r="8" fill="#333"/><circle cx="18" cy="3" r="8" fill="#333"/><circle cx="-18" cy="3" r="3" fill="#fff"/><circle cx="18" cy="3" r="3" fill="#fff"/></g>
+        </svg>
+      </div>
     </section>
 
     <div class="stepnav"><button id="prevBtn">← Back</button><div class="navright"><a href="#" class="navlink" id="navLink"></a><button class="primary" id="nextBtn">Next →</button></div></div>
@@ -2066,13 +2087,13 @@ function renderChain(r) {
   $id("chain").querySelectorAll("[data-go]").forEach(el => el.onclick = () => go(+el.dataset.go));
 }
 
-const STEP_NAMES = ["Where", "Who to win", "Drivers & barriers", "Competitive map", "Audiences", "Experience", "Rollout", "Track", "Positioning", "Wrap-up", "Sources"];
+const STEP_NAMES = ["Where", "Who to win", "Drivers & barriers", "Competitive map", "Audiences", "Experience", "Rollout", "Track", "Positioning", "Wrap-up", "Sources", "Thanks"];
 // Display order of the internal step ids (0 = Brief). "Who to win" (2) comes after the competitive map (4).
 // Main story first, then the wrap-up, then the appendix
 const MAIN = [3, 4, 2, 9, 6, 7, 8], APPX = [11, 1, 5];
-const ORDER = [0, ...MAIN, 10, ...APPX];
+const ORDER = [0, ...MAIN, 10, 12, ...APPX];
 const stepTag = id => MAIN.includes(id) ? String(MAIN.indexOf(id) + 1) : APPX.includes(id) ? "ABCDEFG"[APPX.indexOf(id)] : "";
-const stepLabel = id => id === 10 ? "Wrap up" : `${stepTag(id)}. ${STEP_NAMES[id - 1]}`;
+const stepLabel = id => id === 10 ? "Wrap up" : id === 12 ? "Thanks" : `${stepTag(id)}. ${STEP_NAMES[id - 1]}`;
 const posOf = id => ORDER.indexOf(id);
 
 function renderProgress() {
@@ -2082,16 +2103,16 @@ function renderProgress() {
   $id("prevBtn").style.visibility = cur === 0 ? "hidden" : "visible";
   $id("nextBtn").dataset.intro = cur === 0 ? "1" : "";
   $id("nextBtn").textContent = cur === 0 ? "Start →" : "Next →";
-  $id("nextBtn").style.visibility = posOf(cur) === ORDER.length - 1 || cur === 10 ? "hidden" : "visible";
+  $id("nextBtn").style.visibility = posOf(cur) === ORDER.length - 1 || cur === 12 ? "hidden" : "visible";
   const nl = $id("navLink");
-  nl.textContent = cur === 10 ? "See the list of sources and appendix →" : "";
-  nl.style.display = cur === 10 ? "" : "none";
-  // On Wrap-up the link replaces Next, so let it sit flush right
-  $id("nextBtn").style.display = cur === 10 ? "none" : "";
+  nl.textContent = cur === 12 ? "See the list of sources and appendix →" : "";
+  nl.style.display = cur === 12 ? "" : "none";
+  // On the Thanks page the link replaces Next, so let it sit flush right
+  $id("nextBtn").style.display = cur === 12 ? "none" : "";
   nl.onclick = e => { e.preventDefault(); go(APPX[0]); };
 }
 
-function go(n) { cur = clamp(n, 0, 11); window.mapSpin = null; renderAll(); if (cur === 0 || cur === 10) layoutRoad(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+function go(n) { cur = clamp(n, 0, 12); window.mapSpin = null; renderAll(); if (cur === 0 || cur === 10 || cur === 12) layoutRoad(); window.scrollTo({ top: 0, behavior: "smooth" }); }
 
 // Stretch the Brief road to the full width of the pink box without distorting the car
 function layoutRoad() {
