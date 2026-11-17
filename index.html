@@ -800,7 +800,6 @@ tr.inscope td { background: var(--cp-accent-soft); }
       <div class="small muted" style="margin:-4px 0 12px">A working tracker for once the A/B tests are live.</div>
       <div class="tkpills" id="trackSum"></div>
       <div class="tkoneP" id="trackOne"></div>
-      <div class="card" id="trackTimeline"></div>
       <div id="trackRows"></div>
       <p class="small muted">Entries are stored in this browser when storage is available. They aren't shared with anyone else.</p>
     </section>
@@ -2006,13 +2005,6 @@ function renderTrack() {
   const sel = (path, opts, v) => `<select data-p="${path}">${opts.map(o => `<option${o === v ? " selected" : ""}>${o}</option>`).join("")}</select>`;
   const inp = (path, v, type, ph) => `<input data-p="${path}" type="${type || "text"}" value="${esc(v)}"${ph ? ` placeholder="${ph}"` : ""}>`;
   const fld = (lab, html, cls) => `<label class="tkf${cls ? " " + cls : ""}"><span>${lab}</span>${html}</label>`;
-  const W = 18, wk = Array.from({ length: W }, (_, i) => i + 1);
-  const bar = (a, b, cls) => `<div class="tkbar"><i class="${cls}" style="left:${(a - 1) / W * 100}%;width:${(b - a + 1) / W * 100}%"></i></div>`;
-  const ms = { 6:"Read out", 7:"Decide", 8:"Scale", 18:"Final" };
-  $id("trackTimeline").innerHTML = `<div class="tkgrid"><span class="lab">Week</span><div class="tkweeks">${wk.map(w => `<span>${w}</span>`).join("")}</div>` +
-    TESTS.map((t, k) => `<span class="tkn">${k + 1} · ${t.n.replace(/^Test \d+ · /, "")}</span>${bar(1, 6, "on")}`).join("") +
-    `<span class="tkn">Holdout group</span>${bar(7, 18, "hold")}` +
-    `<span class="lab">Milestones</span><div class="tkweeks ms">${wk.map(w => `<span>${ms[w] || ""}</span>`).join("")}</div></div>`;
   $id("trackOne").innerHTML = `<div><div class="lab">The one number that decides the test</div><div class="tkone">End-to-end conversion</div><div class="tksub">Landing page visitors who buy a policy. Roll out at a +10% lift, with every guardrail holding.</div></div>
     <div class="tkonein">${fld("Today's experience %", inp("one.today", TSTORE.one.today, "number"))}${fld("New experience %", inp("one.next", TSTORE.one.next, "number"))}<div id="tkOneRes"></div></div>`;
   $id("trackRows").innerHTML = TESTS.map((t, k) => {
