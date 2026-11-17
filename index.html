@@ -307,7 +307,9 @@ button.primary { font-weight: 700; letter-spacing: .02em; text-transform: upperc
 .tkmock { color: var(--cp-accent); }
 .tkclear:hover { border-color: var(--cp-accent); color: var(--cp-accent); }
 .tkpills { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
-.tkex { background: var(--cp-accent); color:#fff; font-weight:900; font-size:14px; letter-spacing:.02em; border-radius:10px; padding:7px 18px; margin-bottom:10px; }
+.tkframe { position:relative; border:2px dashed var(--cp-border-strong); border-radius:20px; padding:0 18px 4px; overflow:hidden; }
+.tkframe::after { content:""; position:absolute; inset:0; background: rgba(120,120,120,.12); pointer-events:none; }
+.tkex { position:relative; z-index:1; background: var(--cp-accent); color:#fff; font-weight:900; font-size:14px; letter-spacing:.02em; padding:8px 18px; margin:0 -18px 14px; }
 .thx { padding:44px 64px; display:flex; justify-content:space-between; align-items:center; gap:40px; }
 .thxtxt { flex:1; min-width:0; }
 .thxh { font-size:30px; font-weight:900; color: var(--cp-accent); line-height:1.2; margin-bottom:20px; }
@@ -814,10 +816,12 @@ tr.inscope td { background: var(--cp-accent-soft); }
       <div class="kicker">Step 7 of 7 · Track the experiments</div>
       <div class="tktop"><h2 class="t">Then it’s time to test and decide whether to SHIP, ITERATE or STOP.<br>CTR data can provide more insight for specific pages where necessary.</h2><div class="tkbtns"><button class="tkclear" id="trackMock">Load example data</button><button class="tkclear" id="trackClear">Clear all entries</button></div></div>
       <div class="tkpills" id="trackSum"></div>
-      <div class="tkex">Example A/B test tracker</div>
-      <div class="tkoneP" id="trackOne"></div>
-      <div id="trackRows"></div>
-      <p class="small muted">Entries are stored in this browser when storage is available. They aren't shared with anyone else.</p>
+      <div class="tkframe">
+        <div class="tkex">Example A/B test tracker</div>
+        <div class="tkoneP" id="trackOne"></div>
+        <div id="trackRows"></div>
+        <p class="small muted">Entries are stored in this browser when storage is available. They aren't shared with anyone else.</p>
+      </div>
     </section>
 
     <section class="step" data-step="11">
