@@ -1752,8 +1752,8 @@ function editedShot(sc, p) {
       { px:712, py:16, pw:88, ph:14, bg:"rgb(234,0,116)", x:703, w:104, cap:20, size:7.75, lh:11, wt:700, color:"#fff", align:"center", upper:true, text: p.cta }]; break;
     case "open": o = [Q("Welcome, Jordana. A few questions so we can tailor your quote. What's your home address?", 2, 450)]; break;
     case "waitlist": {
-      const t = (f("bridge") ? "Lemonade Car is coming to Connecticut. Join the waitlist and we'll tell you the day it arrives." : "Lemonade Car is heading to Connecticut! Join our waiting list and get notified when we launch.") + (f("partner") ? " Need cover today? Our partner Bristol West can quote you now." : f("bridge") ? "" : " Meanwhile, our partner Bristol West can help you find a great deal.");
-      o = [Q(t, 3, 400)];
+      const t = (f("bridge") ? "Lemonade Car is coming to Connecticut. Join the waitlist and we'll tell you the day it arrives." : "Lemonade Car is heading to Connecticut! Join our waiting list and get notified when we launch.") + (f("partner") ? "<br><br>Need cover today? Our partner Bristol West can quote you now." : f("bridge") ? "" : "<br><br>Meanwhile, our partner Bristol West can help you find a great deal.");
+      o = [Q(t, 5, 400)];
       if (f("bridge")) o.push({ px:345, py:338, pw:2, ph:2, x:347, w:410, cap:345, size:12.5, lh:18, color:"#333", text:"Need renters or home cover now? Lemonade is already here." });
       break; }
     case "policies": {
