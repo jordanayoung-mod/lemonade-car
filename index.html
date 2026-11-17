@@ -655,6 +655,8 @@ tr.inscope td { background: var(--cp-accent-soft); }
 .vtable tr.pktop td { border-top: 2px solid var(--cp-accent-hover); }
 .vtable tr.pklab td { color: var(--cp-accent-hover); font-weight:900; font-size:11px; letter-spacing:.06em; text-transform:uppercase; padding:6px 10px 0; text-align:left; border-right: 2px solid var(--cp-accent-hover); }
 .vtable tr.pkbot td { border-bottom: 2px solid var(--cp-accent-hover); }
+.vtable tr.pktot td { text-align:right; color: var(--cp-accent); font-weight:900; font-size:13px; letter-spacing:.04em; text-transform:uppercase; padding:6px 10px 10px; }
+.vtable tr.pktot td:last-child { text-align:left; font-size:24px; letter-spacing:0; line-height:1.25; }
 .vtable td, .vtable th { vertical-align: middle; }
 .vtable th { white-space: nowrap; }
 .vtable .vtip { font-size:10px; color: var(--cp-text-soft); margin-left:3px; cursor: help; }
@@ -1508,13 +1510,14 @@ function renderStep2() {
     <th>Opportunity<div class="thd">Premium in play × fit × openness</div></th></tr></thead><tbody><tr class="spacer"><td colspan="8" style="height:28px;border:none"></td></tr>` +
     (rows2 => rows2.map((c, i) => { const pinkName = both.includes(c.n), e = named.includes(c) ? ease(c) : null;
       const first = pinkName && !both.includes(rows2[i - 1]?.n);
-      const pkCls = pinkName ? ["inscope", "pkbox", !both.includes(rows2[i + 1]?.n) ? "pkbot" : ""].filter(Boolean).join(" ") : "";
+      const last = pinkName && !both.includes(rows2[i + 1]?.n), pkCls = pinkName ? "inscope pkbox" : "";
+      const total = last ? `<tr class="inscope pkbox pkbot pktot"><td colspan="7">Combined opportunity</td><td>${fmt$(cs.filter(x => both.includes(x.n)).reduce((t, x) => t + x.opp, 0))}</td></tr>` : "";
       return `${first ? `<tr class="inscope pkbox pktop pklab"><td colspan="8">Strongest target potential</td></tr>` : ""}<tr${pkCls ? ` class="${pkCls}"` : ""}><td style="text-align:left" title="${c.note} · ${c.chan} · ${c.region}"><b style="${pinkName ? "color:var(--cp-accent)" : ""}">${c.n}</b></td>
       <td><div class="vcell">${hb(c.share, mxShare, bigShare.includes(c))}<span>${c.share.toFixed(1)}%</span></div></td>
       <td>${e != null ? `<div class="vcell">${hb(e, mxEase, bigConv.includes(c))}</div>` : `<span class="muted">–</span>`}</td>
       <td>${c.over == null ? `<span class="muted">–</span>` : `<span style="${c.over >= 1.5 ? "color:var(--cp-accent);font-weight:800" : ""}">${c.over.toFixed(1)}×</span>`}</td>
       <td>${c.rate != null ? "+" + c.rate.toFixed(0) + "%" : `<span class="muted">–</span>`}</td>
-      <td>${pct(c.fit)}</td><td>${pct(c.open)}</td><td><div class="vcell">${hb(c.opp, maxOpp, true)}<span>${fmt$(c.opp)}</span></div></td></tr>`; }))([...cs].sort((a, b) => (a.n === "All others") - (b.n === "All others") || b.share - a.share)).join("") + "</tbody>";
+      <td>${pct(c.fit)}</td><td>${pct(c.open)}</td><td><div class="vcell">${hb(c.opp, maxOpp, true)}<span>${fmt$(c.opp)}</span></div></td></tr>${total}`; }))([...cs].sort((a, b) => (a.n === "All others") - (b.n === "All others") || b.share - a.share)).join("") + "</tbody>";
   $id("compTable").querySelectorAll("input[data-cq]").forEach(cb => cb.onchange = e => { e.target.checked ? state.conquest.add(cb.dataset.cq) : state.conquest.delete(cb.dataset.cq); picks[2] = "custom"; confirmed[2] = true; renderAll(); });
   const dims = [["young","Young"],["urban","Urban"],["digital","Digital"],["renter","Renter"],["agent","Agent tie"],["bundle","Home bundle"]];
   $id("profileTable").innerHTML = `<tr><th style="text-align:left">Carrier</th>${dims.map(d => `<th>${d[1]}</th>`).join("")}</tr>
