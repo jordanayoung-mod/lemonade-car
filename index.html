@@ -733,7 +733,7 @@ tr.inscope td { background: var(--cp-accent-soft); }
       <h2 class="t" id="h2"></h2>
       <div id="cqSort" class="cqsort"></div>
       <div class="card"><table id="compTable"></table>
-        <details style="margin-top:10px"><summary class="small">How fit and openness are scored</summary>
+        <details hidden style="margin-top:10px"><summary class="small">How fit and openness are scored</summary>
           <p class="hint">Carriers are profitable again (2025 combined ratio 91.8%) and premium growth has stalled (−0.6% in 2026): expect them to fight harder for good customers.</p>
         <p class="hint"><b>Opportunity</b> = carrier's premium in play in Lemonade Car's states (share × Car-state premium × 53% shopped × 48% online) × Fit × Openness. Ticked rows add up to the “winnable” figure. <b>Fit</b> = their customers look like Lemonade's. <b>Openness</b> = 2023 rate hike + weak agent/home-bundle ties. Scores 1–5 are editable estimates.</p>
           <table id="profileTable"></table><div id="fitWeights" style="max-width:420px;margin-top:8px"></div>
@@ -1499,19 +1499,18 @@ function renderStep2() {
   const mxShare = Math.max(...cs.map(c => c.share)), mxEase = Math.max(...named.map(ease));
   const hb = (v, mx, on) => `<div class="vb"><span style="width:${Math.max(3, v / mx * 100)}%;background:${on ? "var(--cp-accent)" : "var(--cp-border-strong)"}"></span></div>`;
   $id("compTable").className = "vtable";
-  $id("compTable").innerHTML = `<thead><tr><th>Target<div class="thd">Aim conquest here</div></th><th style="text-align:left">Carrier</th>
+  $id("compTable").innerHTML = `<thead><tr><th style="text-align:left">Carrier</th>
     <th style="text-align:left;color:var(--cp-accent)">Market share<div class="thd" style="color:var(--cp-accent)">U.S. car insurance, 2024 (NAIC)</div></th>
     <th style="text-align:left;color:var(--cp-accent)">Ease to convert<div class="thd" style="color:var(--cp-accent)">Fit × openness × switch to Lemonade</div></th>
     <th>Switch to Lemonade<div class="thd">Share of Lemonade switchers ÷ market share</div></th>
     <th>Price hike<div class="thd">2023 avg. rate increase (S&amp;P Global)</div></th>
     <th>Fit<div class="thd">Customers look like Lemonade's</div></th>
     <th>Openness<div class="thd">Ready to leave</div></th>
-    <th>Opportunity<div class="thd">Premium in play × fit × openness</div></th></tr></thead><tbody><tr class="spacer"><td colspan="9" style="height:28px;border:none"></td></tr>` +
+    <th>Opportunity<div class="thd">Premium in play × fit × openness</div></th></tr></thead><tbody><tr class="spacer"><td colspan="8" style="height:28px;border:none"></td></tr>` +
     (rows2 => rows2.map((c, i) => { const pinkName = both.includes(c.n), e = named.includes(c) ? ease(c) : null;
       const first = pinkName && !both.includes(rows2[i - 1]?.n);
       const pkCls = pinkName ? ["inscope", "pkbox", !both.includes(rows2[i + 1]?.n) ? "pkbot" : ""].filter(Boolean).join(" ") : "";
-      return `${first ? `<tr class="inscope pkbox pktop pklab"><td colspan="9">Strongest target potential</td></tr>` : ""}<tr${pkCls ? ` class="${pkCls}"` : ""}><td><input type="checkbox" data-cq="${c.n}" ${state.conquest.has(c.n) ? "checked" : ""} style="accent-color:var(--cp-accent)"></td>
-      <td style="text-align:left" title="${c.note} · ${c.chan} · ${c.region}"><b style="${pinkName ? "color:var(--cp-accent)" : ""}">${c.n}</b></td>
+      return `${first ? `<tr class="inscope pkbox pktop pklab"><td colspan="8">Strongest target potential</td></tr>` : ""}<tr${pkCls ? ` class="${pkCls}"` : ""}><td style="text-align:left" title="${c.note} · ${c.chan} · ${c.region}"><b style="${pinkName ? "color:var(--cp-accent)" : ""}">${c.n}</b></td>
       <td><div class="vcell">${hb(c.share, mxShare, bigShare.includes(c))}<span>${c.share.toFixed(1)}%</span></div></td>
       <td>${e != null ? `<div class="vcell">${hb(e, mxEase, bigConv.includes(c))}</div>` : `<span class="muted">–</span>`}</td>
       <td>${c.over == null ? `<span class="muted">–</span>` : `<span style="${c.over >= 1.5 ? "color:var(--cp-accent);font-weight:800" : ""}">${c.over.toFixed(1)}×</span>`}</td>
