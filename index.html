@@ -1639,8 +1639,7 @@ function renderRivals(r) {
     <div class="small" style="margin-top:4px;display:flex;gap:22px;flex-wrap:wrap;color:var(--cp-text-muted)">
       <span><span style="color:var(--cp-border-strong);font-size:16px">●</span> Customer need</span>
       <span><span style="display:inline-block;width:9px;height:9px;background:var(--cp-heading);vertical-align:0"></span> Competitor, beside the need it answers</span>
-      <span><span style="display:inline-block;width:10px;height:10px;border:2.5px solid var(--cp-accent);border-radius:50%;vertical-align:-1px"></span> Lemonade Car today</span>
-      <span><span style="color:var(--cp-accent);font-size:16px">●</span> We see you. Your price shows it.</span></div>`;
+      <span><span style="display:inline-block;width:10px;height:10px;border:2.5px solid var(--cp-accent);border-radius:50%;vertical-align:-1px"></span> Lemonade Car today</span></div>`;
   document.querySelectorAll("#map text[data-lim], #mapA text[data-lim]").forEach(t => { const lim = +t.dataset.lim; let fs = +t.getAttribute("font-size"); while (fs > 8 && t.getBBox().x + t.getBBox().width > lim) { fs -= 0.5; t.setAttribute("font-size", fs); } });
   const svg = $id("map").querySelector("svg");
   svg.style.cursor = "pointer";
