@@ -655,8 +655,10 @@ tr.inscope td { background: var(--cp-accent-soft); }
 .vtable tr.pktop td { border-top: 2px solid var(--cp-accent-hover); }
 .vtable tr.pklab td { color: var(--cp-accent-hover); font-weight:900; font-size:11px; letter-spacing:.06em; text-transform:uppercase; padding:6px 10px 0; text-align:left; border-right: 2px solid var(--cp-accent-hover); }
 .vtable tr.pkbot td { border-bottom: 2px solid var(--cp-accent-hover); }
-.vtable tr.pktot td { text-align:right; color: var(--cp-accent); font-weight:900; font-size:13px; letter-spacing:.04em; text-transform:uppercase; padding:6px 10px 10px; }
-.vtable tr.pktot td:last-child { text-align:left; font-size:24px; letter-spacing:0; line-height:1.25; }
+.vtable tr.pktot td { background: var(--cp-accent-hover) !important; color:#fff; padding:8px 18px; }
+.pktotin { display:flex; justify-content:flex-end; align-items:baseline; gap:14px; }
+.pktotin span { font-weight:900; font-size:13px; letter-spacing:.04em; text-transform:uppercase; }
+.pktotin b { font-size:24px; font-weight:900; line-height:1.25; }
 .vtable td, .vtable th { vertical-align: middle; }
 .vtable th { white-space: nowrap; }
 .vtable .vtip { font-size:10px; color: var(--cp-text-soft); margin-left:3px; cursor: help; }
@@ -1511,7 +1513,7 @@ function renderStep2() {
     (rows2 => rows2.map((c, i) => { const pinkName = both.includes(c.n), e = named.includes(c) ? ease(c) : null;
       const first = pinkName && !both.includes(rows2[i - 1]?.n);
       const last = pinkName && !both.includes(rows2[i + 1]?.n), pkCls = pinkName ? "inscope pkbox" : "";
-      const total = last ? `<tr class="inscope pkbox pkbot pktot"><td colspan="7">Combined opportunity</td><td>${fmt$(cs.filter(x => both.includes(x.n)).reduce((t, x) => t + x.opp, 0))}</td></tr>` : "";
+      const total = last ? `<tr class="inscope pkbox pkbot pktot"><td colspan="8"><div class="pktotin"><span>Combined opportunity</span><b>${fmt$(cs.filter(x => both.includes(x.n)).reduce((t, x) => t + x.opp, 0))}</b></div></td></tr>` : "";
       return `${first ? `<tr class="inscope pkbox pktop pklab"><td colspan="8">Strongest target potential</td></tr>` : ""}<tr${pkCls ? ` class="${pkCls}"` : ""}><td style="text-align:left" title="${c.note} · ${c.chan} · ${c.region}"><b style="${pinkName ? "color:var(--cp-accent)" : ""}">${c.n}</b></td>
       <td><div class="vcell">${hb(c.share, mxShare, bigShare.includes(c))}<span>${c.share.toFixed(1)}%</span></div></td>
       <td>${e != null ? `<div class="vcell">${hb(e, mxEase, bigConv.includes(c))}</div>` : `<span class="muted">–</span>`}</td>
