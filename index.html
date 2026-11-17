@@ -1238,7 +1238,7 @@ const AUD_WHY = {
 
 // ---- Walkthrough moments (Experience step), in flow order: screenshot + suggested change ----
 const MOMENTS = [
-  { shot:"open", t:"Flow opens", angle:"Make it personal", fix:"recognize", rec:"Greet people by name and say why the questions matter.", change:"“Welcome, Jordana. A few questions so we can tailor your quote.”", why:"They’re building their own quote, not filling in a form." },
+  { shot:"open", t:"Flow opens", angle:"Make it personal", fix:"recognize", rec:"Greet people by name and say why the questions matter.", change:"“Welcome, Jordana. A few questions so we can tailor your quote. What's your home address?”", why:"They’re building their own quote, not filling in a form." },
   { shot:"waitlist", t:"Out of state", angle:"Stay in touch", fix:"bridge", rec:"Say when Car arrives, then offer renters or home.", change:"“Lemonade Car is coming to Connecticut. Join the waitlist and we'll tell you the day it arrives. Need coverage today? Our partner Bristol West can quote you now.” Then, secondary, underneath the pink button: “Need renters or home cover now? Lemonade is already here.”", why:"A date and an alternative keep people with Lemonade until Car can price them." },
   { shot:"handoff", t:"Partner hand-off", angle:"Help, even when Lemonade can't", fix:"partner", noObj:true, rec:"Make sure the partner hand-off works, then say what it offers.", change:"“Need coverage today? Our partner Bristol West can quote you now.”", why:"Visitors Lemonade can't serve yet still leave with help." },
   { shot:"policies", t:"Existing policies", angle:"Acknowledging", fix:"proof", rec:"Recognize the Lemonade policies they already hold.", change:"“We see your Lemonade Homeowners policy. Any other policies with another company?”", why:"It’s more proof that Lemonade sees the individual." },
@@ -1707,7 +1707,7 @@ function beatCopy(beat, segId, p) {
     story: ["Only in a hidden video", "Below the hero: “Most car insurance prices you on all these drivers. Lemonade looks at one: you.”"],
     autonomous: ["Not mentioned", `“Self-driving miles at about half the rate.” (FSD; ${[...AUTO_LIVE].join(", ")})`],
     transparency: ["Nothing on data", "“See what moves your price and what we measure. Download or delete it anytime.”"],
-    recognize: ["“Nice to meet you, Jordana!”", "“Welcome, Jordana. A few questions so we can tailor your quote.”"],
+    recognize: ["“Nice to meet you, Jordana!”", "“Welcome, Jordana. A few questions so we can tailor your quote. What's your home address?”"],
     proof: ["Questions asked neutrally", "“We see your Lemonade Homeowners policy.” · “Your miles are part of your price.”"],
     compare: ["Mileage asked neutrally", "“How far do you drive in a year? Your price is built on your miles, not the national average.”"],
     loading: ["“✓ Pumping gas”", "“Adding up your miles… Reviewing driver history… Checking your car's safety features… ✓ Charging up”"],
