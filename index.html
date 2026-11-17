@@ -1493,7 +1493,7 @@ function renderStep2() {
   bigConv.sort((a, b) => ease(b) - ease(a));
   const both = bigShare.filter(c => bigConv.includes(c)).map(c => c.n);
   const bothList = both.length > 1 ? both.slice(0, -1).join(", ") + " and " + both[both.length - 1] : both[0];
-  $id("h2").innerHTML = both.length ? `${bothList} customers are likely easiest to convert and offer the biggest opportunity cluster.<br>Lemonade's positioning and messaging must remain attractive to them.` : "Lemonade's positioning and messaging should be attractive to the customers easiest to convert.";
+  $id("h2").innerHTML = both.length ? `${bothList} customers are likely easiest to convert and offer the biggest opportunity cluster - Lemonade's positioning and messaging must remain attractive to them.` : "Lemonade's positioning and messaging should be attractive to the customers easiest to convert.";
   const easy = c => named.includes(c) ? ease(c) : 0, maxEase = Math.max(...named.map(ease));
   $id("cqSort").innerHTML = "";
   const mxShare = Math.max(...cs.map(c => c.share)), mxEase = Math.max(...named.map(ease));
